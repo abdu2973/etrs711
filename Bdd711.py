@@ -14,6 +14,8 @@ class Database :
         self.conn.row_factory = sqlite3.Row
         self.create_tables()
         
+        # enefinapeofnaepofnaepfnopeanf
+    
     def create_tables(self):
         cur = self.conn.cursor()
         cur.execute(""" 
