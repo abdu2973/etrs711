@@ -14,22 +14,22 @@ class Database :
         self.conn.row_factory = sqlite3.Row
         self.create_tables()
         
-       
+        
     
     def create_tables(self):
         cur = self.conn.cursor()
         cur.execute(""" 
-                    CREATE TABLE IF NOT EXISTS Utilisateurs (
+                    CREATE TABLE IF NOT EXISTS Utilisateur (
                         id_utilisateur INTEGER PRIMARY KEY AUTOINCREMENT,
                         nom TEXT,
                         prenom TEXT,
                         identifiant TEXT,
-                        mdp TEXT,
+                        mdp TEXT
                     )""")
         
         cur.execute("""
-                    CREATE TABLE IF NOT EXISTS Bouteilles (
-                        id_bouteilles INTEGER PRIMARY KEY,
+                    CREATE TABLE IF NOT EXISTS Bouteille (
+                        id_bouteille INTEGER PRIMARY KEY,
                         domaine_viticole TEXT,
                         nom TEXT,
                         type_bouteilles TEXT,
@@ -41,13 +41,25 @@ class Database :
                     """)
         
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS demande (
+            CREATE TABLE IF NOT EXISTS etageres (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-                FOREIGN KEY (usager_id) REFERENCES usager(id),
+                nom TEXT,
+                stock_bouteilles INTEGER,
+                capacite INTEGER,
+                id_bouteille INTEGER,
+                FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)
             )
         """)
-                    
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS Cave (
+                id_utilisateur INTEGER,
+                id_bouteille INTEGER,
+                FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
+                FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)
+            )
+        """)
+               
+        
     def fin_connexion(self):
-
         self.conn.close()
