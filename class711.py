@@ -40,7 +40,21 @@ class Utilisateurs:
         """
         cur.execute(sql, (nom, prenom, identifiant, mdp))
         conn.commit()
-
+        
+    def connexion(self):
+        conn = sqlite3.connect("Cave.db")
+        cur = conn.cursor()
+        sql = "SELECT * FROM Utilisateur WHERE identifiant = ? AND mdp = ?"
+        cur.execute(sql, (self.identifiant, self.mdp))
+        result = cur.fetchone()
+        conn.close()
+        if result:
+            self.id_utilisateur = result[0]  # id_utilisateur (index 0)
+            self.nom = result[1]
+            self.prenom = result[2]
+            return True
+        else:
+            return False
     
 class Notes:
     
