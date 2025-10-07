@@ -4,6 +4,10 @@ Created on Tue Sep 30 15:48:16 2025
 
 @author: user
 """
+import sqlite3
+import Bdd711 as bdd
+
+
 
 class Utilisateurs:
     
@@ -13,6 +17,30 @@ class Utilisateurs:
         self.prenom = prenom
         self.identifiant= identifiant
         self.mdp = mdp
+    
+    def cree_cave(self):
+        conn = sqlite3.connect("Cave.db")
+        cur= conn.cursor()
+        id_utilisateur = self.id_utilisateur
+        id_etagere = None
+        sql = "INSERT INTO Cave (id_utilisateur, id_etagere) VALUES (?, ?)"
+        cur.execute(sql, (id_utilisateur, id_etagere))
+        conn.commit()
+        
+    def ajouter_utilisateur(self):
+        conn = sqlite3.connect("Cave.db")
+        cur= conn.cursor()
+        nom = self.nom
+        prenom = self.prenom
+        identifiant = self.identifiant
+        mdp = self.mdp
+        sql = """
+            INSERT INTO Utilisateur (nom, prenom, identifiant, mdp)
+            VALUES (?, ?, ?, ?)
+        """
+        cur.execute(sql, (nom, prenom, identifiant, mdp))
+        conn.commit()
+
     
 class Notes:
     
@@ -54,3 +82,6 @@ class Bouteilles:
     
     def moyenne(self):
         print("ok")
+        
+
+test = bdd.Database()

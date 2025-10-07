@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Wine</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="script.js"></script>
+</head>
+<body>
+<header>
+<div><img src="{{ url_for('static', filename='images/cave.png') }}" ></div>
+</header>
+<div id="accueil">
+<div><h1> Bienvenue Chez Wine !</h1> </div>
+<div><p>Vous pouvez maintenant créer votre cave ou bien vous connecter directement !</p></div>
+<div class="lien"><a href="{{ url_for('inscription') }}">S'inscrire</a><br><br></div>
+<div class="lien"><a href="">Se connecter</a><br><br></div>
+
+</div>
+<footer>
+<p>Cave a vin & Co</p>
+</footer>
+</body>
+</html>

@@ -41,8 +41,8 @@ class Database :
                     """)
         
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS etageres (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+            CREATE TABLE IF NOT EXISTS Etageres (
+                id_Etagere INTEGER PRIMARY KEY AUTOINCREMENT,
                 nom TEXT,
                 stock_bouteilles INTEGER,
                 capacite INTEGER,
@@ -54,12 +54,24 @@ class Database :
         cur.execute("""
             CREATE TABLE IF NOT EXISTS Cave (
                 id_utilisateur INTEGER,
-                id_bouteille INTEGER,
+                id_etagere INTEGER,
                 FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
-                FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)
+                FOREIGN KEY (id_etagere) REFERENCES Etageres(id_etagere)
             )
         """)
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS Notes (
+                id_utilisateur INTEGER,
+                id_bouteille INTEGER,
+                notes REAL,
+                commentaires TEXT,
+                id_commentaires INTEGER PRIMARY KEY AUTOINCREMENT,
+                FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
+                FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)            )
+        """)
                
+        self.conn.commit()
         
     def fin_connexion(self):
         self.conn.close()
