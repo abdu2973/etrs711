@@ -18,14 +18,16 @@ class Utilisateurs:
         self.identifiant= identifiant
         self.mdp = mdp
     
-    def cree_cave(self):
+    def voir_cave(self):
         conn = sqlite3.connect("Cave.db")
-        cur= conn.cursor()
-        id_utilisateur = self.id_utilisateur
-        id_etagere = None
-        sql = "INSERT INTO Cave (id_utilisateur, id_etagere) VALUES (?, ?)"
-        cur.execute(sql, (id_utilisateur, id_etagere))
-        conn.commit()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM Cave WHERE id_utilisateur = ?", (self.id_utilisateur,))
+        cave = cur.fetchone()
+
+        conn.close()
+        return cave  
+
         
     def ajouter_utilisateur(self):
         conn = sqlite3.connect("Cave.db")
@@ -49,7 +51,7 @@ class Utilisateurs:
         result = cur.fetchone()
         conn.close()
         if result:
-            self.id_utilisateur = result[0]  # id_utilisateur (index 0)
+            self.id_utilisateur = result[0]  
             self.nom = result[1]
             self.prenom = result[2]
             return True
@@ -69,9 +71,22 @@ class Notes:
 
 class Cave:
     
-    def __init__(self,id_utilisateur,id_etageres):
+    def __init__(self,id_utilisateur):
         self.id_utilisateur = id_utilisateur
-        self.id_etageres = id_etageres
+        self.id_etagere = None   
+        
+    def cree_cave(self):
+        conn = sqlite3.connect("Cave.db")
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM Cave WHERE id_utilisateur = ?", (self.id_utilisateur,))
+        exist = cur.fetchone()
+
+        if not exist:
+            cur.execute("INSERT INTO Cave (id_utilisateur, id_etagere) VALUES (?, ?)", (self.id_utilisateur, self.id_etagere))
+            conn.commit()
+
+        conn.close()
 
 class Etageres:
     
@@ -84,6 +99,10 @@ class Etageres:
 
 class Bouteilles:
     
+    chemin_images_bouteilles = r"D:\Users\user\Desktop\etrs711-main\static\images"
+    
+    
+    
     def __init__(self,id_bouteilles,domaine_viticole,nom,type_bouteilles,annee,region,photo,prix):
         self.id_bouteilles = id_bouteilles
         self.domaine_viticole = domaine_viticole
@@ -94,8 +113,32 @@ class Bouteilles:
         self.photo = photo
         self.prix = prix
     
-    def moyenne(self):
-        print("ok")
+    
+    def ajoute_bouteille(self):
+        conn = sqlite3.connect("Cave.db")
+        cur = conn.cursor()
+    
+        # Chemin complet
+        photo = Bouteilles.chemin_images_bouteilles + "\\" + self.photo
+    
+        # Vérifier si la bouteille existe déjà
+        cur.execute("""
+            SELECT * FROM Bouteille WHERE
+            domaine_viticole=? AND nom=? AND type_bouteilles=? AND annee=? AND region=? AND photo=? AND prix=?
+        """, (self.domaine_viticole, self.nom, self.type_bouteilles, self.annee, self.region, photo, self.prix))
+    
+        existing = cur.fetchone()
+    
+        if not existing:
+            # Si elle n'existe pas, on l'ajoute
+            cur.execute("""
+                INSERT INTO Bouteille (domaine_viticole, nom, type_bouteilles, annee, region, photo, prix)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (self.domaine_viticole, self.nom, self.type_bouteilles, self.annee, self.region, photo, self.prix))
+            conn.commit()
+    
+        conn.close()
         
+               
+    
 
-test = bdd.Database()

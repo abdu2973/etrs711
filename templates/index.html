@@ -8,17 +8,43 @@
 </head>
 <body>
 <header>
-<div><img src="{{ url_for('static', filename='images/cave.png') }}" ></div>
+  <div><img src="{{ url_for('static', filename='images/cave.png') }}"></div>
 </header>
+<!-- Section accueil avec les liens -->
 <div id="accueil">
-<div><h1> Bienvenue Chez Wine !</h1> </div>
-<div><p>Vous pouvez maintenant créer votre cave ou bien vous connecter directement !</p></div>
-<div class="lien"><a href="{{ url_for('inscription') }}">S'inscrire</a><br><br></div>
-<div class="lien"><a href="{{ url_for('connexion') }}">Se connecter</a><br><br></div>
+
+  {% if not est_connecte %}
+  <div><h1> Bienvenue Chez Wine !</h1></div>
+  <div><p>Vous pouvez maintenant vous inscrire ou bien vous connecter directement !</p></div>
+  <div class="lien"><a href="{{ url_for('inscription') }}">S'inscrire</a><br><br></div>
+  <div class="lien"><a href="{{ url_for('connexion') }}">Se connecter</a><br><br></div>
+  {% endif %}
+  {% if est_connecte %}
+  <div><h1> Bienvenue {{ nom_utilisateur }} !</h1></div>
+  <div><p>Vous pouvez maintenant créer votre cave ou bien y accéder directement !</p></div>
+  <div class="lien"><a href="{{ url_for('cave') }}">Créer / Entrer dans la cave</a><br><br></div>
+  {% endif %}
 
 </div>
+<!-- Bouteilles affichées ici -->
+<div id="bouteilles">
+  <h2>Nos bouteilles</h2>
+  {% for b in bouteilles %}
+    <div class="bouteille" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+      <img src="{{ url_for('static', filename='images/' + b[2].split('\\')[-1]) }}" alt="{{ b[0] }}" width="200">
+      <h3>{{ b[0] }} ({{ b[1] }})</h3> <!-- nom + annee -->
+      <p><strong>Domaine :</strong> {{ b[3] }}</p>
+      <p><strong>Type :</strong> {{ b[4] }}</p>
+      <p><strong>Région :</strong> {{ b[5] }}</p>
+      <p><strong>Prix :</strong> {{ b[6] }} €</p>
+    </div>
+  {% endfor %}
+</div>
+
+
+
 <footer>
-<p>Cave a vin & Co</p>
+  <p>Cave a vin & Co</p>
 </footer>
 </body>
 </html>

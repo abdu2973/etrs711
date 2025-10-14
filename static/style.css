@@ -1,12 +1,13 @@
 body {
   margin: 0;
   padding: 0;
+  padding-bottom: 100px; 
+  background-color: slategray;
+  color: white;
 }
 
-footer {
-	background-color:red;
-		
-		}
+
+
 footer {
   background-color: #333;
   color: white;
@@ -70,4 +71,8 @@ form{
 	
 	border: 3px solid;
 	padding: 20px;
+}
+#bouteilles h2 {
+	
+	padding: 10px;
 }

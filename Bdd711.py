@@ -37,6 +37,8 @@ class Database :
                         region TEXT,
                         photo TEXT,
                         prix REAL
+                       
+
                         )
                     """)
         
@@ -70,7 +72,7 @@ class Database :
                 FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
                 FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)            )
         """)
-               
+
         self.conn.commit()
         
     def fin_connexion(self):

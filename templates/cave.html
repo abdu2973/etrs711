@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Cave</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="script.js"></script>
+</head>
+<body>
+<header>
+  <div><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/cave.png') }}"></a></div>
+</header>
+
+<div id="contenu-cave">
+  {% if cave %}
+    <h2>Voici votre cave à vin</h2>
+    <p>Contenu de la cave à afficher ici.</p>
+  {% else %}
+    <h2>Vous n'avez pas encore de cave</h2>
+    <form method="POST" action="{{ url_for('cave') }}">
+      <button type="submit">Créer ma cave</button>
+    </form>
+  {% endif %}
+</div>
+
+<footer>
+  <p>Cave a vin & Co</p>
+</footer>
+</body>
+</html>
