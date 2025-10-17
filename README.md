@@ -17,8 +17,8 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 ## Technologies Utilisées
 
 * **Langage** : Python 3
-* **Framework Web** : [Mettez ici Django, Flask, ou autre]
-* **Base de Données** : [Mettez ici SQLite, PostgreSQL, ou autre]
+* **Framework Web** : Flask
+* **Base de Données** : SQLite
 * **Frontend** : HTML, CSS
 * **Conception** : UML
 
