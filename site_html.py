@@ -10,11 +10,20 @@ import class711
 
 test = Bdd711.Database()
         
-rose = class711.Bouteilles(None,"Chateau la Coste", "grand vin rose", "rose", 2022, "La Provence","rose.jpg", "50")
+rose = class711.Bouteilles(None,"Chateau la Coste", "Grand Vin Rose", "rose", 2022, "La Provence","rose.jpg", 50.0)
 rose.ajoute_bouteille()
 
-bourgogne = class711.Bouteilles(None, "Cave d'aze", "rouge bourgogne", "rouge", "2025", "Bougogne","bourgogne.png" , "80")
+bourgogne = class711.Bouteilles(None, "Cave d'aze", "Rouge Bourgogne", "rouge", 2025, "Bourgogne","bourgogne.png" , 80.0)
 bourgogne.ajoute_bouteille()
+
+bourgogne = class711.Bouteilles(None, "Non précisé", "La Vilageoise", "rose", 2025, "Languedoc","la_villageoise.jpg" , 3.0)
+bourgogne.ajoute_bouteille()
+
+romanee_conti =class711.Bouteilles(None, "Romanée-Conti ", "Romanée-Conti", "rouge", 2017, "Cote-D'Or","romanee.jpg" , 15417.0)
+romanee_conti.ajoute_bouteille()
+
+marquis = class711.Bouteilles(None, "Château / Domaine : Marquis des Lèves ", "Marquis des Lèves", "blanc", 2025, "Bordeaux", "marquis_des_leves.jpg",5.90 )
+marquis.ajoute_bouteille()
 
 html = Flask(__name__)
 html.secret_key = 'ma_clef_secrete_pour_la_session'
