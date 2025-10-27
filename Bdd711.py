@@ -29,7 +29,7 @@ class Database :
         
         cur.execute("""
                     CREATE TABLE IF NOT EXISTS Bouteille (
-                        id_bouteille INTEGER PRIMARY KEY,
+                        id_bouteille INTEGER PRIMARY KEY AUTOINCREMENT,
                         domaine_viticole TEXT,
                         nom TEXT,
                         type_bouteilles TEXT,

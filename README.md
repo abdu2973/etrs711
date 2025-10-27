@@ -8,6 +8,7 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 
 * **Gestion de comptes utilisateurs** : Création de compte et connexion.
 * **Gestion de la cave** : Chaque utilisateur peut créer sa cave virtuelle et y ajouter des étagères avec une capacité paramétrable.
+* **Ajout de bouteilles** : Un formulaire permet d'enregistrer les bouteilles avec leurs caractéristiques (Domaine, Nom, Année, Type, Photo, Prix, etc.).
 * **Gestion des lots** : Possibilité d'ajouter plusieurs bouteilles identiques et de décompter le stock.
 * **Tri et affichage** : Visualisation de toutes les bouteilles de la cave avec des options de tri sur chaque caractéristique.
 * **Suppression et archivage** : Une bouteille peut être supprimée ou archivée (marquée comme "consommée") avec une note de dégustation.

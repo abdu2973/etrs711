@@ -2,29 +2,103 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Cave</title>
+  <title>Ma Cave à Vin</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="script.js"></script>
 </head>
 <body>
 <header>
-  <div><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/cave.png') }}"></a></div>
+  <div><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/cave.png') }}" alt="Cave à vin"></a></div>
 </header>
 
 <div id="contenu-cave">
-  {% if cave %}
-    <h2>Voici votre cave à vin</h2>
-    <p>Contenu de la cave à afficher ici.</p>
-  {% else %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  {% if show_create_button %}
     <h2>Vous n'avez pas encore de cave</h2>
     <form method="POST" action="{{ url_for('cave') }}">
+      <input type="hidden" name="action" value="creer_cave">
       <button type="submit">Créer ma cave</button>
     </form>
+
+  {% else %}
+  
+    <h2>Créer une étagère</h2>
+    <form action="{{ url_for('cave') }}" method="POST">
+      <input type="hidden" name="action" value="ajouter_etagere">
+      <label for="nom">Nom de l’étagère :</label>
+      <input type="text" name="nom" id="nom" required>
+      <label for="capacite">Capacité :</label>
+      <input type="number" name="capacite" id="capacite" min="1" required>
+      <button type="submit">Créer</button>
+    </form>
+
+    <hr style="margin: 40px 0;">
+
+    <h2>Vos étagères</h2>
+    {% if etageres and etageres|length > 0 %}
+      <div id="liste-etageres">
+        {% for e in etageres %}
+          <div class="etagere">
+            <h3>{{ e['nom'] }}</h3>
+            <p><strong>Capacité :</strong> {{ e['capacite'] }} bouteilles</p>
+            <p><strong>Stock :</strong> {{ e['stock_bouteilles'] }}</p>
+
+            {% if e['nom_bouteille'] %}
+              <div class="bouteille">
+                <img src="{{ url_for('static', filename='images/' + e['photo'].split('\\')[-1]) }}" alt="{{ e['nom_bouteille'] }}" width="120">
+                <p><strong>{{ e['nom_bouteille'] }}</strong> ({{ e['annee'] }})</p>
+                <p><em>{{ e['domaine_viticole'] }}</em> — {{ e['region'] }}</p>
+                <p><strong>{{ e['prix'] }} €</strong></p>
+              </div>
+            {% else %}
+              <p><em>Aucune bouteille pour le moment.</em></p>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('cave') }}">
+              <input type="hidden" name="action" value="supprimer_etagere">
+              <input type="hidden" name="id_etagere" value="{{ e['id_Etagere'] }}">
+              <button type="submit">Supprimer cette étagère</button>
+            </form>
+
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Vous n’avez pas encore d’étagères.</p>
+    {% endif %}
+    
+    <hr style="margin: 40px 0;">
+
   {% endif %}
+
+  <div id="bouteilles">
+    <h2>Nos bouteilles disponibles</h2>
+    {% for b in bouteilles %}
+      <div class="bouteille">
+        <img src="{{ url_for('static', filename='images/' + b[2].split('\\')[-1]) }}" alt="{{ b[0] }}" width="200">
+        <h3>{{ b[0] }} ({{ b[1] }})</h3> 
+        <p><strong>Domaine :</strong> {{ b[3] }}</p>
+        <p><strong>Type :</strong> {{ b[4] }}</p>
+        <p><strong>Région :</strong> {{ b[5] }}</p>
+        <p><strong>Prix :</strong> {{ b[6] }} €</p>
+      </div>
+    {% endfor %}
+  </div>
+
 </div>
 
 <footer>
-  <p>Cave a vin & Co</p>
+  <p>Cave à vin & Co</p>
 </footer>
 </body>
 </html>
