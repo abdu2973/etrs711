@@ -31,5 +31,7 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 
 ## Conception UML 
 
+<h1 align="center">Diagramme de Cas d'Utilisation</h1>
+
 ![Diagramme de Cas d'Utilisation](./docs/Diagramme_utilisation.png)
 
