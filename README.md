@@ -35,3 +35,6 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 
 ![Diagramme de Cas d'Utilisation](./docs/Diagramme_utilisation.png)
 
+### Diagramme de Classes
+
+![Diagramme de Classes](./docs/Diagramme_classe.png)
