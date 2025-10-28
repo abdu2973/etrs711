@@ -4,7 +4,7 @@ Projet réalisé pour le module **ETRS711 - Conception et Programmation Orienté
 
 Cette application web permet à plusieurs utilisateurs de gérer leur cave à vin personnelle. Ils peuvent créer une cave virtuelle, y ajouter des bouteilles, les organiser sur des étagères, et les noter.
 
-## Fonctionnalités Implémentées 
+## Fonctionnalités Implémentées ✅
 
 * **Gestion de comptes utilisateurs** : Création de compte et connexion sécurisée.
 * **Gestion de la cave** : Chaque utilisateur peut créer sa cave virtuelle.
@@ -21,7 +21,7 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 * **Interface Web** : Utilisation de Flask pour le backend, HTML/CSS pour le frontend.
 * **Persistance des données** : Base de données SQLite pour stocker les informations.
 
-## Technologies Utilisées 
+## Technologies Utilisées 💻
 
 * **Langage** : Python 3
 * **Framework Web** : Flask
@@ -29,5 +29,6 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 * **Frontend** : HTML, CSS
 * **Conception** : UML
 
-## Conception UML 
+## Conception UML 📊
 
+### Diagramme de Cas d'Utilisation (Représentation Textuelle)
