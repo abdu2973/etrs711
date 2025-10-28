@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -9,9 +8,8 @@
 </head>
 <body>
 <header>
-  <div><img src="{{ url_for('static', filename='images/cave.png') }}"></div>
+  <div><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/cave.png') }}"></a></div>
 </header>
-<!-- Section accueil avec les liens -->
 <div id="accueil">
 
   {% if not est_connecte %}
@@ -24,20 +22,26 @@
   <div><h1> Bienvenue {{ nom_utilisateur }} !</h1></div>
   <div><p>Vous pouvez maintenant créer votre cave ou bien y accéder directement !</p></div>
   <div class="lien"><a href="{{ url_for('cave') }}">Créer / Entrer dans la cave</a><br><br></div>
+  <div class="lien"><a href="{{ url_for('mes_notes') }}">Voir les notes de la communauté</a><br><br></div>
   {% endif %}
 
 </div>
-<!-- Bouteilles affichées ici -->
 <div id="bouteilles">
   <h2>Nos bouteilles</h2>
   {% for b in bouteilles %}
-    <div class="bouteille" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
-      <img src="{{ url_for('static', filename='images/' + b[2].split('\\')[-1]) }}" alt="{{ b[0] }}" width="200">
-      <h3>{{ b[0] }} ({{ b[1] }})</h3> <!-- nom + annee -->
-      <p><strong>Domaine :</strong> {{ b[3] }}</p>
-      <p><strong>Type :</strong> {{ b[4] }}</p>
-      <p><strong>Région :</strong> {{ b[5] }}</p>
-      <p><strong>Prix :</strong> {{ b[6] }} €</p>
+    <div class="bouteille">
+      <img src="{{ url_for('static', filename='images/' + b['photo'].split('\\')[-1]) }}" alt="{{ b['nom'] }}" width="200">
+      <h3>{{ b['nom'] }} ({{ b['annee'] }})</h3> <p><strong>Domaine :</strong> {{ b['domaine_viticole'] }}</p>
+      <p><strong>Type :</strong> {{ b['type_bouteilles'] }}</p>
+      <p><strong>Région :</strong> {{ b['region'] }}</p>
+      <p><strong>Prix :</strong> {{ b['prix'] }} €</p>
+      <p class="note-moyenne">Note Moyenne Comm.:
+        {% if b['note_moyenne'] is not none %}
+          {{ b['note_moyenne'] }}/20
+        {% else %}
+          N/A
+        {% endif %}
+      </p>
     </div>
   {% endfor %}
 </div>

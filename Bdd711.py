@@ -46,9 +46,17 @@ class Database :
             CREATE TABLE IF NOT EXISTS Etageres (
                 id_Etagere INTEGER PRIMARY KEY AUTOINCREMENT,
                 nom TEXT,
-                stock_bouteilles INTEGER,
-                capacite INTEGER,
+                capacite INTEGER
+            )
+        """)
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS StockEtagere (
+                id_etagere INTEGER,
                 id_bouteille INTEGER,
+                quantite INTEGER NOT NULL DEFAULT 0,
+                PRIMARY KEY (id_etagere, id_bouteille),
+                FOREIGN KEY (id_etagere) REFERENCES Etageres(id_Etagere) ON DELETE CASCADE,
                 FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)
             )
         """)
@@ -66,8 +74,8 @@ class Database :
             CREATE TABLE IF NOT EXISTS Notes (
                 id_utilisateur INTEGER,
                 id_bouteille INTEGER,
-                notes REAL,
-                commentaires TEXT,
+                notes REAL CHECK(notes >= 0 AND notes <= 20),
+                commentaires TEXT CHECK(LENGTH(commentaires) <= 150),
                 id_commentaires INTEGER PRIMARY KEY AUTOINCREMENT,
                 FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
                 FOREIGN KEY (id_bouteille) REFERENCES Bouteille(id_bouteille)            )

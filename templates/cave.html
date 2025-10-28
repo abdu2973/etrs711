@@ -32,6 +32,10 @@
 
   {% else %}
   
+    <div class="liens-navigation">
+      <a href="{{ url_for('mes_notes') }}" class="btn-nav">Voir les notes de la communauté</a>
+    </div>
+
     <h2>Créer une étagère</h2>
     <form action="{{ url_for('cave') }}" method="POST">
       <input type="hidden" name="action" value="ajouter_etagere">
@@ -44,25 +48,85 @@
 
     <hr style="margin: 40px 0;">
 
+    <div class="form-tri">
+      <form method="GET" action="{{ url_for('cave') }}">
+        <label for="sort_by">Trier les bouteilles par :</label>
+        <select name="sort_by" id="sort_by">
+          <option value="nom_asc" {% if sort_by == 'nom_asc' %}selected{% endif %}>Nom (A-Z)</option>
+          <option value="nom_desc" {% if sort_by == 'nom_desc' %}selected{% endif %}>Nom (Z-A)</option>
+          <option value="annee_desc" {% if sort_by == 'annee_desc' %}selected{% endif %}>Année (Plus récent)</option>
+          <option value="annee_asc" {% if sort_by == 'annee_asc' %}selected{% endif %}>Année (Plus ancien)</option>
+          <option value="prix_desc" {% if sort_by == 'prix_desc' %}selected{% endif %}>Prix (Plus cher)</option>
+          <option value="prix_asc" {% if sort_by == 'prix_asc' %}selected{% endif %}>Prix (Moins cher)</option>
+        </select>
+        <button type="submit">Trier</button>
+      </form>
+    </div>
+
     <h2>Vos étagères</h2>
     {% if etageres and etageres|length > 0 %}
       <div id="liste-etageres">
         {% for e in etageres %}
           <div class="etagere">
             <h3>{{ e['nom'] }}</h3>
-            <p><strong>Capacité :</strong> {{ e['capacite'] }} bouteilles</p>
-            <p><strong>Stock :</strong> {{ e['stock_bouteilles'] }}</p>
+            <p><strong>Stock :</strong> {{ e['stock_actuel'] }} / {{ e['capacite'] }} bouteilles</p>
+            
+            {% if e['bouteilles'] and e['bouteilles']|length > 0 %}
+              {% for b in e['bouteilles'] %}
+                <div class="bouteille-contenu">
+                  <img src="{{ url_for('static', filename='images/' + b['photo'].split('\\')[-1]) }}" alt="{{ b['nom'] }}">
+                  <p><strong>{{ b['nom'] }}</strong> ({{ b['annee'] }})</p>
+                  <p><strong>Quantité : {{ b['quantite'] }}</strong></p>
+                  <p class="note-moyenne">Note Moyenne Comm.: 
+                    {% if b['note_moyenne'] is not none %}
+                      {{ b['note_moyenne'] }}/20
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </p>
+                  
+                  <div class="actions-bouteille">
+                    <form method="POST" action="{{ url_for('cave') }}">
+                      <input type="hidden" name="action" value="retirer_bouteille">
+                      <input type="hidden" name="id_etagere" value="{{ e['id_Etagere'] }}">
+                      <input type="hidden" name="id_bouteille" value="{{ b['id_bouteille'] }}">
+                      <button type="submit">Retirer (-1)</button>
+                    </form>
+                    
+                    <form method="POST" action="{{ url_for('cave') }}" class="form-archive">
+                      <input type="hidden" name="action" value="archiver_bouteille">
+                      <input type="hidden" name="id_etagere" value="{{ e['id_Etagere'] }}">
+                      <input type="hidden" name="id_bouteille" value="{{ b['id_bouteille'] }}">
+                      <input type="number" name="note" min="0" max="20" step="0.5" placeholder="Note/20" required>
+                      <input type="text" name="commentaire" placeholder="Commentaire (150 max)" maxlength="150">
+                      <button type="submit">Archiver (-1)</button>
+                    </form>
+                  </div>
 
-            {% if e['nom_bouteille'] %}
-              <div class="bouteille">
-                <img src="{{ url_for('static', filename='images/' + e['photo'].split('\\')[-1]) }}" alt="{{ e['nom_bouteille'] }}" width="120">
-                <p><strong>{{ e['nom_bouteille'] }}</strong> ({{ e['annee'] }})</p>
-                <p><em>{{ e['domaine_viticole'] }}</em> — {{ e['region'] }}</p>
-                <p><strong>{{ e['prix'] }} €</strong></p>
-              </div>
+                </div>
+              {% endfor %}
             {% else %}
-              <p><em>Aucune bouteille pour le moment.</em></p>
+              <p><em>Aucune bouteille sur cette étagère.</em></p>
             {% endif %}
+            
+            <hr>
+            
+            <div class="form-ajout-bouteille">
+              <form method="POST" action="{{ url_for('cave') }}">
+                <input type="hidden" name="action" value="ajouter_bouteille">
+                <input type="hidden" name="id_etagere" value="{{ e['id_Etagere'] }}">
+                <select name="id_bouteille" required>
+                  <option value="">-- Choisir une bouteille --</option>
+                  {% for bd in bouteilles_dropdown %}
+                    <option value="{{ bd['id_bouteille'] }}">{{ bd['nom'] }}</option>
+                  {% endfor %}
+                </select>
+                <input type="number" name="quantite" min="1" value="1" class="input-quantite" required>
+                <button type="submit">Ajouter</button>
+              </form>
+            </div>
+            
+            <br>
 
             <form method="POST" action="{{ url_for('cave') }}">
               <input type="hidden" name="action" value="supprimer_etagere">
@@ -81,16 +145,56 @@
 
   {% endif %}
 
+  <h2>Mes archives personnelles</h2>
+  <div id="contenu-notes" style="max-width: 900px; margin: 20px auto; padding: 10px;">
+    {% if mes_notes and mes_notes|length > 0 %}
+      <div id="liste-notes">
+        {% for n in mes_notes %}
+          <div class="note-archive">
+            <div class="note-archive-img">
+              <img src="{{ url_for('static', filename='images/' + n['photo'].split('\\')[-1]) }}" alt="{{ n['nom'] }}">
+            </div>
+            <div class="note-archive-details">
+              <h3>{{ n['nom'] }} ({{ n['annee'] }})</h3>
+              <p><em>{{ n['domaine_viticole'] }} - {{ n['region'] }}</em></p>
+              
+              {% if n['notes'] < 8 %}
+                <p class="note-valeur note-rouge"><strong>Note : {{ n['notes'] }} / 20</strong></p>
+              {% elif n['notes'] < 12 %}
+                <p class="note-valeur note-orange"><strong>Note : {{ n['notes'] }} / 20</strong></p>
+              {% else %}
+                <p class="note-valeur note-vert"><strong>Note : {{ n['notes'] }} / 20</strong></p>
+              {% endif %}
+              
+              <p class="note-commentaire">"{{ n['commentaires'] }}"</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Vous n'avez pas encore de bouteilles archivées.</p>
+    {% endif %}
+  </div>
+
+  <hr style="margin: 40px 0;">
+
   <div id="bouteilles">
     <h2>Nos bouteilles disponibles</h2>
-    {% for b in bouteilles %}
+    {% for b in bouteilles_disponibles %}
       <div class="bouteille">
-        <img src="{{ url_for('static', filename='images/' + b[2].split('\\')[-1]) }}" alt="{{ b[0] }}" width="200">
-        <h3>{{ b[0] }} ({{ b[1] }})</h3> 
-        <p><strong>Domaine :</strong> {{ b[3] }}</p>
-        <p><strong>Type :</strong> {{ b[4] }}</p>
-        <p><strong>Région :</strong> {{ b[5] }}</p>
-        <p><strong>Prix :</strong> {{ b[6] }} €</p>
+        <img src="{{ url_for('static', filename='images/' + b['photo'].split('\\')[-1]) }}" alt="{{ b['nom'] }}" width="200">
+        <h3>{{ b['nom'] }} ({{ b['annee'] }})</h3> 
+        <p><strong>Domaine :</strong> {{ b['domaine_viticole'] }}</p>
+        <p><strong>Type :</strong> {{ b['type_bouteilles'] }}</p>
+        <p><strong>Région :</strong> {{ b['region'] }}</p>
+        <p><strong>Prix :</strong> {{ b['prix'] }} €</p>
+        <p class="note-moyenne">Note Moyenne Comm.: 
+          {% if b['note_moyenne'] is not none %}
+            {{ b['note_moyenne'] }}/20
+          {% else %}
+            N/A
+          {% endif %}
+        </p>
       </div>
     {% endfor %}
   </div>

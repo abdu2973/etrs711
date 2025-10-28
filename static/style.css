@@ -42,7 +42,7 @@ header {
   color: white;
   background-color: #333333;
   border: 2px solid #333333;
-  padding: 8px 14px;
+  padding: 4px 14px;
   border-radius: 6px;
   transition: background-color 0.3s, transform 0.2s;
 }
@@ -79,6 +79,14 @@ form {
   margin-top: 0;
 }
 
+.bouteille-contenu {
+  border: 1px solid #ccc;
+  background-color: #4e5a66;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
 .bouteille-contenu img {
   width: 100px;
   height: auto;
@@ -100,6 +108,30 @@ form {
   border-radius: 5px;
   margin-top: 10px;
 }
+
+.actions-bouteille {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.actions-bouteille form {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  display: flex;
+  gap: 5px;
+}
+
+.form-archive input[type="number"] {
+  width: 80px;
+}
+.form-archive input[type="text"] {
+  width: 150px;
+}
+
 
 #bouteilles {
   display: flex;
@@ -156,4 +188,125 @@ form {
 
 .bouteille strong {
   color: #111;
+}
+
+.input-quantite {
+  width: 50px;
+}
+
+.liens-navigation {
+  margin: 20px;
+  text-align: center;
+}
+
+.btn-nav {
+  text-decoration: none;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  font-size: 1.1em;
+}
+
+.btn-nav:hover {
+  background-color: #45a049;
+}
+
+#contenu-notes {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+#liste-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.note-archive {
+  background-color: #5a6673;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+}
+
+.note-archive-img img {
+  width: 120px;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.note-archive-details h3 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #f0f0f0;
+}
+
+.note-archive-details .note-valeur {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.note-archive-details .note-commentaire {
+  font-style: italic;
+  background-color: #4e5a66;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.note-archive-details .note-utilisateur {
+  font-size: 0.9em;
+  color: #ddd;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.form-tri {
+  background-color: #444f5a;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 8px;
+  border: 3px solid #444f5a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-tri form {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.note-rouge {
+  color: #FF4136; /* Rouge */
+}
+
+.note-orange {
+  color: #FF851B; /* Orange */
+}
+
+.note-vert {
+  color: #2ECC40; /* Vert */
+}
+
+.note-moyenne {
+    font-weight: bold;
+    color: #e0e0e0; /* Couleur un peu plus claire pour la distinguer */
+    margin-top: 5px;
+}
+
+.bouteille .note-moyenne { /* Style spécifique pour la card bouteille */
+    color: #555; /* Plus foncé car le fond est blanc */
+    font-size: 0.9em;
 }

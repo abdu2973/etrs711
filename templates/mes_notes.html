@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Notes de la Communauté</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <div><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/cave.png') }}" alt="Cave à vin"></a></div>
+</header>
+
+<div id="contenu-notes">
+
+  <div class="liens-navigation">
+    <a href="{{ url_for('cave') }}" class="btn-nav">Retour à ma cave</a>
+  </div>
+
+  <h2>Notes de la Communauté</h2>
+
+  {% if notes and notes|length > 0 %}
+    <div id="liste-notes">
+      {% for n in notes %}
+        <div class="note-archive">
+          <div class="note-archive-img">
+            <img src="{{ url_for('static', filename='images/' + n['photo'].split('\\')[-1]) }}" alt="{{ n['bouteille_nom'] }}">
+          </div>
+          <div class="note-archive-details">
+            <h3>{{ n['bouteille_nom'] }} ({{ n['annee'] }})</h3>
+            <p><em>{{ n['domaine_viticole'] }} - {{ n['region'] }}</em></p>
+            <p class="note-moyenne">Note Moyenne Comm.: 
+              {% if n['note_moyenne'] is not none %}
+                {{ n['note_moyenne'] }}/20
+              {% else %}
+                N/A
+              {% endif %}
+            </p>
+            
+            {% if n['notes'] < 8 %}
+              <p class="note-valeur note-rouge"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+            {% elif n['notes'] < 12 %}
+              <p class="note-valeur note-orange"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+            {% else %}
+              <p class="note-valeur note-vert"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+            {% endif %}
+            
+            <p class="note-commentaire">"{{ n['commentaires'] }}"</p>
+            <p class="note-utilisateur">-- Noté par {{ n['prenom'] }} {{ n['user_nom'] }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Aucune note n'a été laissée par la communauté.</p>
+  {% endif %}
+
+</div>
+
+<footer>
+  <p>Cave à vin & Co</p>
+</footer>
+</body>
+</html>
