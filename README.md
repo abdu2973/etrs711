@@ -37,7 +37,7 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 
 ### Diagramme de Classes
 
-![Diagramme de Classes](./docs/Diagramme_classe.pn)
+![Diagramme de Classes](./docs/Diagramme_classe.png)
 
 ### Diagramme de sequences
 
