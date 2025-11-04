@@ -28,7 +28,7 @@
           <div class="note-archive-details">
             <h3>{{ n['bouteille_nom'] }} ({{ n['annee'] }})</h3>
             <p><em>{{ n['domaine_viticole'] }} - {{ n['region'] }}</em></p>
-            <p class="note-moyenne">Note Moyenne Comm.: 
+            <p class="note-moyenne">Note Moyenne: 
               {% if n['note_moyenne'] is not none %}
                 {{ n['note_moyenne'] }}/20
               {% else %}
@@ -37,11 +37,11 @@
             </p>
             
             {% if n['notes'] < 8 %}
-              <p class="note-valeur note-rouge"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+              <p class="note-valeur note-rouge"><strong>Note de l'Utilisateur: {{ n['notes'] }} / 20</strong></p>
             {% elif n['notes'] < 12 %}
-              <p class="note-valeur note-orange"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+              <p class="note-valeur note-orange"><strong>Note de l'Utilisateur: {{ n['notes'] }} / 20</strong></p>
             {% else %}
-              <p class="note-valeur note-vert"><strong>Note perso.: {{ n['notes'] }} / 20</strong></p>
+              <p class="note-valeur note-vert"><strong>Note de l'Utilisateur: {{ n['notes'] }} / 20</strong></p>
             {% endif %}
             
             <p class="note-commentaire">"{{ n['commentaires'] }}"</p>
