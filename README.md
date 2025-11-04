@@ -44,5 +44,4 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 #### Ajout d'une bouteille
 ![Diagramme de Classes](./docs/Diagramme_sequence1.png) 
 
-#### Archivage d'une bouteille
-![Diagramme de Classes](./docs/Diagramme_sequence2.png) 
+
