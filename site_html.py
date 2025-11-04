@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Tue Sep 30 15:48:16 2025
+
+@author: user
+"""
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import Bdd711
 import class711
@@ -26,7 +31,7 @@ html.secret_key = 'ma_clef_secrete_pour_la_session'
 @html.route("/")
 def index():
     conn = Bdd711.sqlite3.connect("Cave.db")
-    conn.row_factory = Bdd711.sqlite3.Row # Pour accéder par nom de colonne
+    conn.row_factory = Bdd711.sqlite3.Row 
     cur = conn.cursor()
     cur.execute("SELECT id_bouteille, nom, annee, photo, domaine_viticole, type_bouteilles, region, prix FROM Bouteille")
     
@@ -179,9 +184,9 @@ def cave():
     sort_by = request.args.get('sort_by', 'nom_asc')
 
     conn = Bdd711.sqlite3.connect("Cave.db")
-    conn.row_factory = Bdd711.sqlite3.Row # Pour accéder par nom de colonne
+    conn.row_factory = Bdd711.sqlite3.Row 
     cur = conn.cursor()
-    cur.execute("SELECT id_bouteille, nom FROM Bouteille ORDER BY nom") # Juste id et nom pour le dropdown
+    cur.execute("SELECT id_bouteille, nom FROM Bouteille ORDER BY nom") 
     bouteilles_dropdown = cur.fetchall() 
     
     cur.execute("SELECT id_bouteille, nom, annee, photo, domaine_viticole, type_bouteilles, region, prix FROM Bouteille ORDER BY nom")
@@ -197,7 +202,7 @@ def cave():
         return render_template("cave.html", 
                                etageres=None, 
                                show_create_button=True, 
-                               bouteilles_dropdown=bouteilles_dropdown, 
+                               bouteilles_dropdown=bouteilles_dropdown ,
                                mes_notes=None, 
                                sort_by=sort_by,
                                bouteilles_disponibles=bouteilles_dispo_list)
@@ -216,4 +221,4 @@ def cave():
 
 
 if __name__ == "__main__":
-    html.run(debug=True, use_reloader=False)
+    html.run(debug=True, use_reloader=False,port =5050)

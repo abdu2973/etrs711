@@ -6,7 +6,7 @@ Created on Tue Sep 30 15:48:16 2025
 """
 import sqlite3
 import Bdd711 as bdd
-import statistics # Needed for mean calculation if done in Python
+import statistics 
 
 class Utilisateurs:
     
@@ -185,9 +185,9 @@ class Notes:
         result = cur.fetchone()
         conn.close()
         if result and result[0] is not None:
-            return round(result[0], 1) # Arrondi à 1 décimale
+            return round(result[0], 1)
         else:
-            return None # Ou 0, ou "N/A" selon ce que tu préfères afficher
+            return None
 
 
 class Cave:
