@@ -27,7 +27,7 @@ Cette application web permet à plusieurs utilisateurs de gérer leur cave à vi
 * **Framework Web** : Flask
 * **Base de Données** : SQLite
 * **Frontend** : HTML, CSS
-* **Conception** : UML (Mermaid Syntax)
+* **Conception** : UML (image générer via draw.io)
 
 ## Conception UML 
 
